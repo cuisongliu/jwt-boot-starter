@@ -27,7 +27,9 @@ import com.cuisongliu.jwt.converter.SignMessageConverter;
 import com.cuisongliu.jwt.filter.AuthFilter;
 import com.cuisongliu.jwt.security.Base64SecurityAction;
 import com.cuisongliu.jwt.security.DataSecurityAction;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -37,6 +39,8 @@ import org.springframework.context.annotation.Configuration;
  * @since 2018-02-28 22:05
  */
 @Configuration
+@ConditionalOnWebApplication
+@ComponentScan({"com.cuisongliu.jwt.tools"})
 public class JwtAutoConfig {
 
     @Bean
