@@ -23,13 +23,15 @@ package com.cuisongliu.jwt.autoconfig;
  * THE SOFTWARE.
  */
 
+import com.cuisongliu.jwt.autoconfig.properties.JwtProperties;
 import com.cuisongliu.jwt.converter.SignMessageConverter;
 import com.cuisongliu.jwt.filter.AuthFilter;
 import com.cuisongliu.jwt.security.Base64SecurityAction;
 import com.cuisongliu.jwt.security.DataSecurityAction;
+import com.cuisongliu.jwt.tools.JwtTokenTool;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -40,7 +42,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnWebApplication
-@ComponentScan({"com.cuisongliu.jwt.tools"})
+@EnableConfigurationProperties(JwtProperties.class)
 public class JwtAutoConfig {
 
     @Bean
@@ -59,5 +61,11 @@ public class JwtAutoConfig {
     @Bean
     public DataSecurityAction dataSecurityAction() {
         return new Base64SecurityAction();
+    }
+
+
+    @Bean
+    public JwtTokenTool jwtTokenTool(JwtProperties jwtProperties){
+        return new JwtTokenTool(jwtProperties);
     }
 }

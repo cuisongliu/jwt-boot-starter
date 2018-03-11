@@ -28,8 +28,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -52,10 +50,14 @@ import java.util.Random;
  * @author cuisongliu [cuisongliu@qq.com]
  * @since 2018-02-28 22:01
  */
-@Component
 public class JwtTokenTool {
-    @Autowired
-    private JwtProperties jwtProperties;
+
+    private final JwtProperties jwtProperties;
+
+    public JwtTokenTool(JwtProperties jwtProperties) {
+        this.jwtProperties = jwtProperties;
+    }
+
     /**
      * 获取用户名从token中
      */
