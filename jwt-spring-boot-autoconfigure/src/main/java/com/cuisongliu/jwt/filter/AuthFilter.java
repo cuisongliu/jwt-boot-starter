@@ -24,7 +24,9 @@ package com.cuisongliu.jwt.filter;
  */
 
 import com.cuisongliu.jwt.autoconfig.properties.JwtProperties;
+import com.cuisongliu.jwt.dto.ErrorResponse;
 import com.cuisongliu.jwt.tools.JwtTokenTool;
+import com.cuisongliu.jwt.tools.WebTool;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -62,17 +64,17 @@ public class AuthFilter extends OncePerRequestFilter {
                     try {
                         boolean flag = jwtTokenTool.isTokenExpired(authToken);
                         if (flag) {
-                            WebUtil.renderJson(response, new ErrorTip(BizExceptionEnum.TOKEN_EXPIRED.getCode(), BizExceptionEnum.TOKEN_EXPIRED.getMessage()));
+                            WebTool.renderJson(response, new ErrorResponse(700, "token过期"));
                             return;
                         }
                     } catch (JwtException e) {
                         //有异常就是token解析失败
-                        WebUtil.renderJson(response, new ErrorTip(BizExceptionEnum.TOKEN_ERROR.getCode(), BizExceptionEnum.TOKEN_ERROR.getMessage()));
+                        WebTool.renderJson(response, new ErrorResponse(700,"token验证失败"));
                         return;
                     }
                 } else {
                     //header没有带Bearer字段
-                    WebUtil.renderJson(response, new ErrorTip(BizExceptionEnum.TOKEN_ERROR.getCode(), BizExceptionEnum.TOKEN_ERROR.getMessage()));
+                    WebTool.renderJson(response, new ErrorResponse(700,"token验证失败"));
                     return;
                 }
                 filterChain.doFilter(request, response);
