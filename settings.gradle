@@ -1,0 +1,3 @@
+rootProject.name = 'jwt-boot-starter'
+include 'jwt-spring-boot-autoconfigure'
+include 'jwt-spring-boot-starter'
